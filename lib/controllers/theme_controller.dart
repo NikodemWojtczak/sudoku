@@ -4,6 +4,7 @@ import 'package:sudoku/utils/my_colors.dart';
 
 class ThemesController extends GetxController {
   late ThemeData globalTheme;
+  late ThemeData globalThemeDark;
 
   static Color get background {
     return MyColors.background;
@@ -21,9 +22,11 @@ class ThemesController extends GetxController {
     return MyColors.primary;
   }
 
-  Future<void> loadTheme() async {
+  void loadTheme() async {
+    globalThemeDark = ThemeData.dark();
     globalTheme = ThemeData.from(
       colorScheme: ColorScheme.light(
+        outline: MyColors.primary,
         background: MyColors.background,
         primary: MyColors.primary,
         secondary: MyColors.accent,
