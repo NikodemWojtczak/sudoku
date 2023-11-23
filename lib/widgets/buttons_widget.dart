@@ -30,9 +30,11 @@ class MyButtons {
   }
 
   static Widget levelButtonWidget(
-      {required bool isFinished, required int numberOfLevel}) {
+      {required Function function,
+      required bool isFinished,
+      required int numberOfLevel}) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => function,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

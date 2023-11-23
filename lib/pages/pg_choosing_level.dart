@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
+import 'package:sudoku/widgets/text_widgets.dart';
 
 class PgChosingLevel extends GetView<PgChoosingLevelController> {
   const PgChosingLevel({super.key});
@@ -9,31 +12,39 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: MyButtons.backButtonWidget(),
+        title: Obx(() => MyTextWidgets.titleText(
+            inputText:
+                controller.currentLevel.string.split('.')[1].capitalize ?? "")),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                MyButtons.backButtonWidget(),
-              ],
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
                   Expanded(
                     child: MyButtons.mainButtonWidget(
-                        inputFunction: () {}, inputText: "Easy"),
+                        inputFunction: () =>
+                            controller.onClickChangeLevel(Levels.easy),
+                        inputText: "Easy"),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: MyButtons.mainButtonWidget(
-                        inputFunction: () {}, inputText: "Medium"),
+                        inputFunction: () =>
+                            controller.onClickChangeLevel(Levels.medium),
+                        inputText: "Medium"),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: MyButtons.mainButtonWidget(
-                        inputFunction: () {}, inputText: "Hard"),
+                        inputFunction: () =>
+                            controller.onClickChangeLevel(Levels.hard),
+                        inputText: "Hard"),
                   ),
                 ],
               ),
@@ -50,7 +61,11 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
                     mainAxisSpacing: 20),
                 itemBuilder: (BuildContext context, int index) {
                   return MyButtons.levelButtonWidget(
-                      isFinished: true, numberOfLevel: 100);
+                      function: () {
+                        log("dupa");
+                      },
+                      isFinished: true,
+                      numberOfLevel: 100);
                 },
               ),
             )),
