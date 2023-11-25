@@ -4,7 +4,7 @@ import 'package:sudoku/controllers/pages/pg_algorythms_controller.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/pages/pg_dashboard_controller.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
-import 'package:sudoku/controllers/sudoku_game_controller.dart';
+import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/controllers/theme_controller.dart';
 import 'package:sudoku/routes.dart';
 import 'package:sudoku/pages.dart';
@@ -40,6 +40,6 @@ resourcesStartupInitialization() {
   Get.lazyPut(() => PgAlgorythmsController(), fenix: true);
   Get.lazyPut(() => SudokuGamePgController(), fenix: true);
   Get.lazyPut(() => PgChoosingLevelController(), fenix: true);
-  Get.put(SudokuGameController());
+  Get.put(SudokuController());
   Get.put(ThemesController());
 }

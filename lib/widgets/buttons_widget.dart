@@ -30,41 +30,36 @@ class MyButtons {
   }
 
   static Widget levelButtonWidget(
-      {required Function function,
-      required bool isFinished,
-      required int numberOfLevel}) {
-    return GestureDetector(
-      onTap: () => function,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: MyColors.buttons,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            MyTextWidgets.levelText(
-                inputText: "Level ${numberOfLevel.toString()}"),
-            Container(
-              margin: const EdgeInsets.all(4),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: MyColors.background),
-              child: isFinished
-                  ? Icon(
-                      Icons.check,
-                      size: 40,
-                      color: MyColors.finished,
-                    )
-                  : Icon(
-                      Icons.close,
-                      size: 40,
-                      color: MyColors.notFinished,
-                    ),
-            ),
-          ],
-        ),
+      {required bool isFinished, required int numberOfLevel}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: MyColors.buttons,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MyTextWidgets.levelText(
+              inputText: "Level ${numberOfLevel.toString()}"),
+          Container(
+            margin: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: MyColors.background),
+            child: isFinished
+                ? Icon(
+                    Icons.check,
+                    size: 40,
+                    color: MyColors.finished,
+                  )
+                : Icon(
+                    Icons.close,
+                    size: 40,
+                    color: MyColors.notFinished,
+                  ),
+          ),
+        ],
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
@@ -29,21 +27,21 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
                   Expanded(
                     child: MyButtons.mainButtonWidget(
                         inputFunction: () =>
-                            controller.onClickChangeLevel(Levels.easy),
+                            controller.onClickChangeDifficulty(Levels.easy),
                         inputText: "Easy"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MyButtons.mainButtonWidget(
                         inputFunction: () =>
-                            controller.onClickChangeLevel(Levels.medium),
+                            controller.onClickChangeDifficulty(Levels.medium),
                         inputText: "Medium"),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: MyButtons.mainButtonWidget(
                         inputFunction: () =>
-                            controller.onClickChangeLevel(Levels.hard),
+                            controller.onClickChangeDifficulty(Levels.hard),
                         inputText: "Hard"),
                   ),
                 ],
@@ -60,12 +58,13 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemBuilder: (BuildContext context, int index) {
-                  return MyButtons.levelButtonWidget(
-                      function: () {
-                        log("dupa");
-                      },
-                      isFinished: true,
-                      numberOfLevel: 100);
+                  return GestureDetector(
+                    onTap: () {
+                      controller.onClickLevel(level: index);
+                    },
+                    child: MyButtons.levelButtonWidget(
+                        isFinished: false, numberOfLevel: index + 1),
+                  );
                 },
               ),
             )),
