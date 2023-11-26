@@ -25,4 +25,12 @@ class MyTextWidgets {
           color: MyColors.primary, fontWeight: FontWeight.bold, fontSize: 24),
     );
   }
+
+  static Widget sudokuGameButtonText({required String inputText}) {
+    return Text(
+      inputText,
+      style: TextStyle(
+          color: MyColors.primary, fontWeight: FontWeight.bold, fontSize: 20),
+    );
+  }
 }
