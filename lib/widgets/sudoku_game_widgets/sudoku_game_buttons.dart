@@ -12,10 +12,14 @@ class SudokuGameButtons {
   Widget numberButton(int number) {
     return Expanded(
         child: TextButton(
-            onPressed: () => sudokuGamePgController.setSudokuFieldValue(number),
+            onPressed: () => sudokuGamePgController.onCLickNumber(number),
             child: Text(
               number.toString(),
-              style: TextStyle(fontSize: 50, color: MyColors.accent),
+              style: TextStyle(
+                  fontSize: 50,
+                  color: sudokuGamePgController.isPencilOn
+                      ? MyColors.primary
+                      : MyColors.accent),
             )));
   }
 
@@ -40,9 +44,10 @@ class SudokuGameButtons {
       children: [
         IconButton(
             onPressed: () => sudokuGamePgController.onCLickPencil(),
-            icon: const Icon(
+            icon: Icon(
               Icons.mode_edit,
               size: iconSize,
+              color: sudokuGamePgController.isPencilOn ? MyColors.accent : null,
             )),
         MyTextWidgets.sudokuGameButtonText(inputText: "Pencil")
       ],

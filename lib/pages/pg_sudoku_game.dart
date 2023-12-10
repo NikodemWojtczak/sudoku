@@ -15,10 +15,10 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
         centerTitle: true,
         leading: MyButtons.backButtonWidget(),
       ),
-      body: Column(
-        children: [
-          GetBuilder<SudokuGamePgController>(builder: (_) {
-            return Padding(
+      body: GetBuilder<SudokuGamePgController>(builder: (context) {
+        return Column(
+          children: [
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: GridView.builder(
                   shrinkWrap: true,
@@ -29,28 +29,28 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                   itemBuilder: (contex, index) {
                     return GestureDetector(
                       onTap: () => controller.onCLickField(index),
-                      child: SudokuField.field(
+                      child: SudokuField().field(
                           number: index,
                           value: controller.getSudokuFieldValue(index)),
                     );
                   }),
-            );
-          }),
-          Row(
-            children: [
-              SudokuGameButtons().undoButton(),
-              SudokuGameButtons().hintButton(),
-              SudokuGameButtons().pencilButton(),
-              SudokuGameButtons().quicklButton(),
-              SudokuGameButtons().checkButton(),
-            ],
-          ),
-          Row(
-            children: List.generate(
-                9, (index) => SudokuGameButtons().numberButton(index + 1)),
-          )
-        ],
-      ),
+            ),
+            Row(
+              children: [
+                SudokuGameButtons().undoButton(),
+                SudokuGameButtons().hintButton(),
+                SudokuGameButtons().pencilButton(),
+                SudokuGameButtons().quicklButton(),
+                SudokuGameButtons().checkButton(),
+              ],
+            ),
+            Row(
+              children: List.generate(
+                  9, (index) => SudokuGameButtons().numberButton(index + 1)),
+            )
+          ],
+        );
+      }),
     );
   }
 }

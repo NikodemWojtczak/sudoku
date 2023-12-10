@@ -3,15 +3,18 @@ import 'package:sudoku/controllers/sudoku_controller.dart';
 
 class SudokuGamePgController extends GetxController {
   SudokuController sudokuController = Get.find();
-  int highlighted = 100;
+
+  int highlightedField = 100;
   int xHighlighted = 10;
   int yHighlighted = 10;
   int xHighlightedBox = 10;
   int yHighlightedBox = 10;
   int highlightedValue = 100;
 
+  bool isPencilOn = false;
+
   void resetHighlights() {
-    highlighted = 100;
+    highlightedField = 100;
     xHighlighted = 10;
     yHighlighted = 10;
     xHighlightedBox = 10;
@@ -24,39 +27,41 @@ class SudokuGamePgController extends GetxController {
   }
 
   void onCLickField(int number) {
-    highlighted = number;
+    highlightedField = number;
     _calculateHighlight();
     update();
   }
 
   void onCLickNumber(int number) {
-    highlighted = number;
-    _calculateHighlight();
+    if (isPencilOn) {
+      sudokuController.hints[highlightedField]?.add(number);
+    } else {
+      setSudokuFieldValue(number);
+    }
+
     update();
   }
 
   void setSudokuFieldValue(int value) {
-    try {
-      sudokuController.setValueSudokuBoard(highlighted, value);
-    } catch (e) {
-      print(e);
-    }
-    update();
+    sudokuController.setValueSudokuBoard(highlightedField, value);
   }
 
   void _calculateHighlight() {
-    xHighlighted = highlighted % 9;
-    yHighlighted = highlighted ~/ 9;
+    xHighlighted = highlightedField % 9;
+    yHighlighted = highlightedField ~/ 9;
 
     xHighlightedBox = xHighlighted ~/ 3;
     yHighlightedBox = yHighlighted ~/ 3;
 
-    highlightedValue = getSudokuFieldValue(highlighted);
+    highlightedValue = getSudokuFieldValue(highlightedField);
   }
 
   void onCLickHint() {}
 
-  void onCLickPencil() {}
+  void onCLickPencil() {
+    isPencilOn = !isPencilOn;
+    update();
+  }
 
   void onCLickSuperPencil() {}
 

@@ -1,16 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
+import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/utils/my_colors.dart';
 
 class SudokuField {
-  static Widget field(
+  Widget field(
       {required int number, int highlighted = 10, required int value}) {
     int x = number % 9;
     int y = number ~/ 9;
     SudokuGamePgController sudokuGamePgController = Get.find();
+    SudokuController sudokuController = Get.find();
 
     int xBox = x ~/ 3;
     int yBox = y ~/ 3;
@@ -18,42 +18,70 @@ class SudokuField {
     double borderWidth = 2.5;
     Color boxBorderColor = MyColors.fieldBorderBox;
     Color regularEdgeBorderColor = MyColors.fieldBorderBasic;
-    Color highlightedColor = Colors.grey;
+    Color highlightedColor = Colors.indigo.shade50;
     Color pickedColor = Colors.red;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: sudokuGamePgController.yHighlighted == y &&
-                sudokuGamePgController.xHighlighted == x
-            ? pickedColor
-            : sudokuGamePgController.getSudokuFieldValue(number) ==
-                        sudokuGamePgController.highlightedValue ||
-                    sudokuGamePgController.yHighlighted == y ||
-                    sudokuGamePgController.xHighlighted == x ||
-                    sudokuGamePgController.xHighlightedBox == xBox &&
-                        sudokuGamePgController.yHighlightedBox == yBox
-                ? highlightedColor
-                : null,
-        border: Border(
-          top: y == 0
-              ? BorderSide(width: borderWidth, color: boxBorderColor)
-              : BorderSide.none,
-          left: x == 0
-              ? BorderSide(width: borderWidth, color: boxBorderColor)
-              : BorderSide.none,
-          right: BorderSide(
-              width: borderWidth,
-              color: x % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
-          bottom: BorderSide(
-              width: borderWidth,
-              color: y % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
-        ),
+    BoxDecoration boxDecoration = BoxDecoration(
+      color: sudokuGamePgController.yHighlighted == y &&
+              sudokuGamePgController.xHighlighted == x
+          ? pickedColor
+          : sudokuGamePgController.yHighlighted == y ||
+                  sudokuGamePgController.xHighlighted == x ||
+                  sudokuGamePgController.xHighlightedBox == xBox &&
+                      sudokuGamePgController.yHighlightedBox == yBox
+              ? highlightedColor
+              : 0 == sudokuGamePgController.highlightedValue
+                  ? null
+                  : sudokuGamePgController.getSudokuFieldValue(number) ==
+                          sudokuGamePgController.highlightedValue
+                      ? highlightedColor
+                      : null,
+      border: Border(
+        top: y == 0
+            ? BorderSide(width: borderWidth, color: boxBorderColor)
+            : BorderSide.none,
+        left: x == 0
+            ? BorderSide(width: borderWidth, color: boxBorderColor)
+            : BorderSide.none,
+        right: BorderSide(
+            width: borderWidth,
+            color: x % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
+        bottom: BorderSide(
+            width: borderWidth,
+            color: y % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
       ),
-      child: Center(
-          child: Text(
-        ((value).toString()),
-        style: const TextStyle(fontSize: 30),
-      )),
     );
+
+    if (value != 0) {
+      return Container(
+        decoration: boxDecoration,
+        child: FittedBox(
+            fit: BoxFit.fitHeight,
+            child: Text(
+              ((value).toString()),
+            )),
+      );
+    } else {
+      return Container(
+        decoration: boxDecoration,
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3),
+            itemBuilder: (BuildContext context, int index) {
+              return FittedBox(
+                fit: BoxFit.none,
+                child: Text(
+                  sudokuController.hints[number]?.contains(index + 1) ?? false
+                      ? (index + 1).toString()
+                      : "",
+                  style: const TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+            itemCount: 9,
+            physics: const NeverScrollableScrollPhysics()),
+      );
+    }
   }
 }
