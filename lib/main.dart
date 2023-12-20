@@ -8,10 +8,13 @@ import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/controllers/theme_controller.dart';
 import 'package:sudoku/routes.dart';
 import 'package:sudoku/pages.dart';
+import 'package:sudoku/services/sudoku_board_file_reader.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 void main() {
   resourcesStartupInitialization();
+
+  SudokuBoardFileReader().loadSudokuBoards();
 
   ThemesController tc = Get.find();
   tc.loadTheme();

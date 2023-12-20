@@ -28,11 +28,11 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                       crossAxisCount: 9),
                   itemBuilder: (contex, index) {
                     return GestureDetector(
-                      onTap: () => controller.onCLickField(index),
-                      child: SudokuField().field(
+                        onTap: () => controller.onCLickField(index),
+                        child: SudokuField().field(
+                          value: controller.getSudokuFieldValue(index),
                           number: index,
-                          value: controller.getSudokuFieldValue(index)),
-                    );
+                        ));
                   }),
             ),
             Row(

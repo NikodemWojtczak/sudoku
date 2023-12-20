@@ -48,26 +48,30 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
               ),
             ),
             Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GridView.builder(
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 135,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20),
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      controller.onClickLevel(level: index);
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Obx(
+                  () => GridView.builder(
+                    itemCount: controller.numberOfLevels.value,
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 135,
+                            childAspectRatio: 1,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.onClickLevel(level: index);
+                        },
+                        child: MyButtons.levelButtonWidget(
+                            isFinished: false, numberOfLevel: index + 1),
+                      );
                     },
-                    child: MyButtons.levelButtonWidget(
-                        isFinished: false, numberOfLevel: index + 1),
-                  );
-                },
+                  ),
+                ),
               ),
-            )),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width - 32,
               child: MyButtons.mainButtonWidget(
