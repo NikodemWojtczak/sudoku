@@ -25,6 +25,8 @@ class PgChoosingLevelController extends GetxController {
   }
 
   onClickLevel({required int level}) {
+    sudokuController.loadLevel(level, currentLevel.value);
+
     Get.toNamed(Pages.pgSudokuGame, arguments: {'level': level});
   }
 }

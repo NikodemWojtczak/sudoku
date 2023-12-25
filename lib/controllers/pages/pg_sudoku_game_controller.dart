@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
+import 'package:sudoku/utils/my_strings.dart';
+import 'package:sudoku/widgets/pop_up.dart';
 
 class SudokuGamePgController extends GetxController {
   SudokuController sudokuController = Get.find();
@@ -34,11 +38,15 @@ class SudokuGamePgController extends GetxController {
 
   void onCLickNumber(int number) {
     if (isPencilOn) {
-      sudokuController.hints[highlightedField]?.add(number);
+      if (sudokuController.hints[highlightedField]?.contains(number) ?? false) {
+        sudokuController.hints[highlightedField]?.remove(number);
+      } else {
+        sudokuController.hints[highlightedField]?.add(number);
+      }
     } else {
       setSudokuFieldValue(number);
+      sudokuController.removeHints(highlightedField, number);
     }
-
     update();
   }
 
@@ -63,9 +71,18 @@ class SudokuGamePgController extends GetxController {
     update();
   }
 
-  void onCLickSuperPencil() {}
+  void onCLickSuperPencil() {
+    sudokuController.fillHints();
+    update();
+  }
 
   void onCLickUndo() {}
 
-  void onCLickCheck() {}
+  void onCLickCheck() {
+    if (sudokuController.validate()) {
+      MyPopUp.basicPopUp("Success", MyStrings.gameWin);
+    } else {
+      MyPopUp.basicPopUp("Failure", MyStrings.gameFail);
+    }
+  }
 }

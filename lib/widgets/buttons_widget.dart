@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/utils/my_colors.dart';
+import 'package:sudoku/utils/my_strings.dart';
+import 'package:sudoku/widgets/pop_up.dart';
 import 'package:sudoku/widgets/text_widgets.dart';
 
 class MyButtons {
@@ -23,8 +26,18 @@ class MyButtons {
 
   static Widget backButtonWidget() {
     return IconButton(
-      onPressed: () => Get.back(),
-      icon: Icon(Icons.arrow_back_ios_new),
+      onPressed: () {
+        SudokuController sudokuController = Get.find();
+        if (sudokuController.isGameOn) {
+          MyPopUp.yesNoPopUp("Warning", MyStrings.gameOnWarning, () {
+            sudokuController.isGameOn = false;
+            Get.close(2);
+          });
+        } else {
+          Get.back();
+        }
+      },
+      icon: const Icon(Icons.arrow_back_ios_new),
       iconSize: 32,
     );
   }
