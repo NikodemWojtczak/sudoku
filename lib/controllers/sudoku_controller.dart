@@ -1,13 +1,13 @@
-import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
+import 'package:sudoku/models/sudoku_board_model.dart';
 
 class SudokuController extends GetxController {
   late List<List<int>> sudokuBoardsHard;
   late List<List<int>> sudokuBoardsEasy;
   late List<List<int>> sudokuBoardsMedium;
 
-  late List<int> sudokuBoard;
+  SudokuBoard sudokuBoard = SudokuBoard();
 
   late int _level;
   late Levels _difficulty;
@@ -30,7 +30,7 @@ class SudokuController extends GetxController {
   }
 
   void setValueSudokuBoard(int index, int value) {
-    sudokuBoard[index] = value;
+    sudokuBoard.sudokuBoard[index] = value;
   }
 
   void loadLevel(int level, Levels difficulty) {
@@ -39,51 +39,22 @@ class SudokuController extends GetxController {
     _difficulty = difficulty;
     switch (_difficulty) {
       case Levels.easy:
-        sudokuBoard = List.from(sudokuBoardsEasy[_level]);
+        sudokuBoard.sudokuBoard = List.from(sudokuBoardsEasy[_level]);
         break;
       case Levels.medium:
-        sudokuBoard = List.from(sudokuBoardsMedium[_level]);
+        sudokuBoard.sudokuBoard = List.from(sudokuBoardsMedium[_level]);
         break;
       case Levels.hard:
-        sudokuBoard = List.from(sudokuBoardsHard[_level]);
+        sudokuBoard.sudokuBoard = List.from(sudokuBoardsHard[_level]);
         break;
     }
     isGameOn = true;
   }
 
-  bool validate() {
-    if (sudokuBoard.contains(0)) {
-      return false;
-    }
-
-    for (var i = 0; i < sudokuBoard.length; i++) {
-      int value = sudokuBoard[i];
-
-      int x = i % 9;
-      int y = i ~/ 9;
-      int boxX = x ~/ 3;
-      int boxY = y ~/ 3;
-      int boxOffset = 27 * boxY + 3 * boxX;
-
-      for (var i = 0; i < 9; i++) {
-        int columnsValues = sudokuBoard[x + i * 9];
-        int rowsValues = sudokuBoard[y * 9 + i];
-        int boxsValues = sudokuBoard[boxOffset + i % 3 + 9 * (i ~/ 3)];
-        if (columnsValues == value ||
-            rowsValues == value ||
-            boxsValues == value) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
   void fillHints() {
     resetHintValues();
-    for (var i = 0; i < sudokuBoard.length; i++) {
-      int value = sudokuBoard[i];
+    for (var i = 0; i < sudokuBoard.sudokuBoard.length; i++) {
+      int value = sudokuBoard.sudokuBoard[i];
 
       if (value != 0) {
         continue;
@@ -98,9 +69,10 @@ class SudokuController extends GetxController {
       int boxOffset = 27 * boxY + 3 * boxX;
 
       for (var i = 0; i < 9; i++) {
-        int columnsValues = sudokuBoard[x + i * 9];
-        int rowsValues = sudokuBoard[y * 9 + i];
-        int boxsValues = sudokuBoard[boxOffset + i % 3 + 9 * (i ~/ 3)];
+        int columnsValues = sudokuBoard.sudokuBoard[x + i * 9];
+        int rowsValues = sudokuBoard.sudokuBoard[y * 9 + i];
+        int boxsValues =
+            sudokuBoard.sudokuBoard[boxOffset + i % 3 + 9 * (i ~/ 3)];
         newHints.remove(columnsValues);
         newHints.remove(rowsValues);
         newHints.remove(boxsValues);

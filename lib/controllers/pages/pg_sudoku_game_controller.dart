@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
+import 'package:sudoku/services/sudoku_solvers/sudoku_backtracking.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/widgets/pop_up.dart';
 
@@ -27,7 +28,7 @@ class SudokuGamePgController extends GetxController {
   }
 
   int getSudokuFieldValue(int number) {
-    return sudokuController.sudokuBoard[number];
+    return sudokuController.sudokuBoard.sudokuBoard[number];
   }
 
   void onCLickField(int number) {
@@ -64,7 +65,16 @@ class SudokuGamePgController extends GetxController {
     highlightedValue = getSudokuFieldValue(highlightedField);
   }
 
-  void onCLickHint() {}
+  void onCLickHint() {
+    SudokuBackTracking sudokuBackTracking = SudokuBackTracking();
+    try {
+      sudokuBackTracking.solveSudoku(sudokuController.sudokuBoard);
+      update();
+    } catch (e) {
+      print(e);
+      MyPopUp.basicPopUp("title", "content");
+    }
+  }
 
   void onCLickPencil() {
     isPencilOn = !isPencilOn;
@@ -79,7 +89,7 @@ class SudokuGamePgController extends GetxController {
   void onCLickUndo() {}
 
   void onCLickCheck() {
-    if (sudokuController.validate()) {
+    if (sudokuController.sudokuBoard.validate()) {
       MyPopUp.basicPopUp("Success", MyStrings.gameWin);
     } else {
       MyPopUp.basicPopUp("Failure", MyStrings.gameFail);
