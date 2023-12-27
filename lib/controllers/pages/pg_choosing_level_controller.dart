@@ -8,6 +8,10 @@ class PgChoosingLevelController extends GetxController {
   Rx<Levels> currentLevel = Levels.easy.obs;
   SudokuController sudokuController = Get.find();
   Rx<int> numberOfLevels = 0.obs;
+  RxList progressEasy = [].obs;
+  RxList progressMedium = [].obs;
+  RxList progressHard = [].obs;
+  late int level;
 
   onClickChangeDifficulty(Levels inputCurrentLevel) {
     currentLevel.value = inputCurrentLevel;
@@ -22,11 +26,13 @@ class PgChoosingLevelController extends GetxController {
         numberOfLevels.value = sudokuController.sudokuBoardsHard.length;
         break;
     }
+    update();
   }
 
-  onClickLevel({required int level}) {
-    sudokuController.loadLevel(level, currentLevel.value);
+  onClickLevel({required int levelInput}) {
+    sudokuController.loadLevel(levelInput, currentLevel.value);
+    level = levelInput;
 
-    Get.toNamed(Pages.pgSudokuGame, arguments: {'level': level});
+    Get.toNamed(Pages.pgSudokuGame);
   }
 }

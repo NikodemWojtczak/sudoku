@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
+import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/sudoku_game_widgets/sudoku_field.dart';
 import 'package:sudoku/widgets/sudoku_game_widgets/sudoku_game_buttons.dart';
 
 class PgSudokuGame extends GetView<SudokuGamePgController> {
-  const PgSudokuGame({super.key});
+  PgSudokuGame({super.key});
+
+  SudokuController sudokuController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,8 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                     return GestureDetector(
                         onTap: () => controller.onCLickField(index),
                         child: SudokuField().field(
-                          value: controller.getSudokuFieldValue(index),
+                          value:
+                              sudokuController.sudokuBoard.getFieldValue(index),
                           number: index,
                         ));
                   }),

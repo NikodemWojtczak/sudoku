@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/utils/my_colors.dart';
+import 'package:sudoku/utils/my_constant_values.dart';
 
 class SudokuField {
   Widget field(
@@ -15,11 +16,11 @@ class SudokuField {
     int xBox = x ~/ 3;
     int yBox = y ~/ 3;
 
-    double borderWidth = 2.5;
+    double borderWidth = MyConstantValues.borderWidth;
     Color boxBorderColor = MyColors.fieldBorderBox;
     Color regularEdgeBorderColor = MyColors.fieldBorderBasic;
-    Color highlightedColor = Colors.indigo.shade50;
-    Color pickedColor = Colors.red;
+    Color highlightedColor = MyColors.highlightedColor;
+    Color pickedColor = MyColors.pickedColor;
 
     BoxDecoration boxDecoration = BoxDecoration(
       color: sudokuGamePgController.yHighlighted == y &&
@@ -32,7 +33,7 @@ class SudokuField {
               ? highlightedColor
               : 0 == sudokuGamePgController.highlightedValue
                   ? null
-                  : sudokuGamePgController.getSudokuFieldValue(number) ==
+                  : sudokuController.sudokuBoard.getFieldValue(number) ==
                           sudokuGamePgController.highlightedValue
                       ? highlightedColor
                       : null,
@@ -71,7 +72,9 @@ class SudokuField {
               return FittedBox(
                 fit: BoxFit.none,
                 child: Text(
-                  sudokuController.hints[number]?.contains(index + 1) ?? false
+                  sudokuController.sudokuBoard.hints[number]
+                              ?.contains(index + 1) ??
+                          false
                       ? (index + 1).toString()
                       : "",
                   style: const TextStyle(

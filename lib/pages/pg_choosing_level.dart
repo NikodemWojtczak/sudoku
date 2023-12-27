@@ -50,26 +50,40 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Obx(
-                  () => GridView.builder(
-                    itemCount: controller.numberOfLevels.value,
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 135,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.onClickLevel(level: index);
-                        },
-                        child: MyButtons.levelButtonWidget(
-                            isFinished: false, numberOfLevel: index + 1),
-                      );
-                    },
-                  ),
-                ),
+                child: GetBuilder<PgChoosingLevelController>(builder: (_) {
+                  return Obx(
+                    () => GridView.builder(
+                      itemCount: controller.numberOfLevels.value,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 135,
+                              childAspectRatio: 1,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20),
+                      itemBuilder: (BuildContext context, int index) {
+                        bool isFinished;
+                        switch (controller.currentLevel.value) {
+                          case Levels.easy:
+                            isFinished = controller.progressEasy[index] == 1;
+                            break;
+                          case Levels.medium:
+                            isFinished = controller.progressMedium[index] == 1;
+                            break;
+                          case Levels.hard:
+                            isFinished = controller.progressHard[index] == 1;
+                            break;
+                        }
+                        return GestureDetector(
+                          onTap: () {
+                            controller.onClickLevel(levelInput: index);
+                          },
+                          child: MyButtons.levelButtonWidget(
+                              isFinished: isFinished, numberOfLevel: index + 1),
+                        );
+                      },
+                    ),
+                  );
+                }),
               ),
             ),
             SizedBox(

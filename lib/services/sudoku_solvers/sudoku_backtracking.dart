@@ -6,15 +6,14 @@ class SudokuBackTracking extends SudokuSolver {
   @override
   SudokuBoard generateSudoku() {
     SudokuBoard sudokuBoard = SudokuBoard();
-
-    sudokuBoard.sudokuBoard = List.generate(81, (index) => 0);
+    sudokuBoard.loadSudokuBoard(List.generate(81, (index) => 0));
 
     _backtracking(sudokuBoard: sudokuBoard);
     return sudokuBoard;
   }
 
   bool _backtracking({int index = 0, required SudokuBoard sudokuBoard}) {
-    if (sudokuBoard.sudokuBoard[index] != 0) {
+    if (sudokuBoard.getFieldValue(index) != 0) {
       if (index == 80) {
         return true;
       }
@@ -25,18 +24,18 @@ class SudokuBackTracking extends SudokuSolver {
 
     for (var number in numbersToFill) {
       if (canBePlaced(index, number, sudokuBoard)) {
-        sudokuBoard.sudokuBoard[index] = number;
+        sudokuBoard.setFieldValue(index, number);
         if (index == 80) {
           return true;
         }
         if (_backtracking(index: index + 1, sudokuBoard: sudokuBoard)) {
           return true;
         } else {
-          sudokuBoard.sudokuBoard[index] = 0;
+          sudokuBoard.setFieldValue(index, 0);
         }
       }
     }
-    sudokuBoard.sudokuBoard[index] = 0;
+    sudokuBoard.setFieldValue(index, 0);
     return false;
   }
 

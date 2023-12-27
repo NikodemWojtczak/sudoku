@@ -12,10 +12,10 @@ abstract class SudokuSolver {
     int boxY = y ~/ 3;
     int boxOffset = 27 * boxY + 3 * boxX;
     for (var i = 0; i < 9; i++) {
-      int columnsValues = sudokuBoard.sudokuBoard[x + i * 9];
-      int rowsValues = sudokuBoard.sudokuBoard[y * 9 + i];
+      int columnsValues = sudokuBoard.getFieldValue(x + i * 9);
+      int rowsValues = sudokuBoard.getFieldValue(y * 9 + i);
       int boxsValues =
-          sudokuBoard.sudokuBoard[boxOffset + i % 3 + 9 * (i ~/ 3)];
+          sudokuBoard.getFieldValue(boxOffset + i % 3 + 9 * (i ~/ 3));
       if (columnsValues == value ||
           rowsValues == value ||
           boxsValues == value) {

@@ -9,4 +9,6 @@ class MyColors {
   static Color notFinished = const Color(0xffff3d55);
   static Color fieldBorderBasic = const Color.fromARGB(255, 138, 138, 138);
   static Color fieldBorderBox = const Color(0xff000000);
+  static Color highlightedColor = Colors.indigo.shade50;
+  static Color pickedColor = Colors.red;
 }

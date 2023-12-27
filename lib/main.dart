@@ -9,12 +9,14 @@ import 'package:sudoku/controllers/theme_controller.dart';
 import 'package:sudoku/routes.dart';
 import 'package:sudoku/pages.dart';
 import 'package:sudoku/services/sudoku_board_file_reader.dart';
+import 'package:sudoku/services/sudoku_progress_file_reader.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-void main() {
+void main() async {
   resourcesStartupInitialization();
 
-  SudokuBoardFileReader().loadSudokuBoards();
+  await SudokuBoardFileReader().loadSudokuBoards();
+  await SudokuProgressFileReader().loadSudokuProgresses();
 
   ThemesController tc = Get.find();
   tc.loadTheme();
