@@ -3,4 +3,5 @@ class Pages {
   static const String pgChooseLevel = "/PgChooseLevel";
   static const String pgAlgorythms = "/PgAlgorythms";
   static const String pgSudokuGame = "/PgASudokuGame";
+  static const String pgGenerateLevel = "/PgGenerateLevel";
 }

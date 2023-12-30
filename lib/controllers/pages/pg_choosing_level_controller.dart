@@ -35,4 +35,8 @@ class PgChoosingLevelController extends GetxController {
 
     Get.toNamed(Pages.pgSudokuGame);
   }
+
+  onGenerateLevel() {
+    Get.toNamed(Pages.pgGenerateLevel);
+  }
 }
