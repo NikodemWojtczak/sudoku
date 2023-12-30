@@ -25,7 +25,7 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                   MyButtons.backButtonWidget(),
                   MyTextWidgets.titleText(
                       inputText:
-                          "Level ${controller.pgChoosingLevelController.level}"),
+                          "Level ${controller.pgChoosingLevelController.level + 1}"),
                   MyButtons.restartButtonWidget()
                 ],
               ),

@@ -55,21 +55,55 @@ class SudokuGamePgController extends GetxController {
     update();
   }
 
-  void onCLickHint() {
-    if (!sudokuController.isGameOn) return;
-    sudokuController.addAction(HintEvents());
-    update();
-  }
-
   void onCLickPencil() {
     if (!sudokuController.isGameOn) return;
     isPencilOn = !isPencilOn;
     update();
   }
 
+  void onCLickHint() {
+    if (!sudokuController.isGameOn) return;
+    if (sudokuController.numbersOfHint > 0) {
+      sudokuController.addAction(HintEvents());
+    } else {
+      MyPopUp.complexPopup("Warning", MyStrings.lackOfHints, [
+        MyButtons.mainButtonWidget(
+            inputFunction: () {
+              sudokuController.increaseNumbersOfHints();
+              Get.back();
+              update();
+            },
+            inputText: "Watch an add"),
+        MyButtons.mainButtonWidget(
+            inputFunction: () {
+              Get.back();
+            },
+            inputText: "Back")
+      ]);
+    }
+    update();
+  }
+
   void onCLickSuperPencil() {
     if (!sudokuController.isGameOn) return;
-    sudokuController.addAction(QuickPencilEvents());
+    if (sudokuController.numbersOfSuperPencil > 0) {
+      sudokuController.addAction(QuickPencilEvents());
+    } else {
+      MyPopUp.complexPopup("Warning", MyStrings.lackOfSuperPencil, [
+        MyButtons.mainButtonWidget(
+            inputFunction: () {
+              sudokuController.increaseNumbersOfSuperPencils();
+              Get.back();
+              update();
+            },
+            inputText: "Watch an add"),
+        MyButtons.mainButtonWidget(
+            inputFunction: () {
+              Get.back();
+            },
+            inputText: "Back")
+      ]);
+    }
     update();
   }
 
