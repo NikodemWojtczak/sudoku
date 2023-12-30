@@ -8,6 +8,7 @@ class QuickPencilEvents extends ButtonEvents {
     previousHints = sudokuController.sudokuBoard.getHints();
     sudokuController.sudokuBoard
         .setHints(sudokuController.sudokuBoard.fillHints());
+    sudokuController.decreaseNumbersOfSuperPencils();
   }
 
   @override

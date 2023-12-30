@@ -13,7 +13,7 @@ import 'package:sudoku/services/sudoku_progress_file_reader.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 void main() async {
-  resourcesStartupInitialization();
+  controllersInitialization();
 
   await SudokuBoardFileReader().loadSudokuBoards();
   await SudokuProgressFileReader().loadSudokuProgresses();
@@ -40,7 +40,7 @@ void main() async {
   ));
 }
 
-resourcesStartupInitialization() {
+controllersInitialization() {
   Get.lazyPut(() => DashboardPageController(), fenix: true);
   Get.lazyPut(() => PgAlgorythmsController(), fenix: true);
   Get.lazyPut(() => SudokuGamePgController(), fenix: true);

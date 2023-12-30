@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
+import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/utils/my_colors.dart';
 import 'package:sudoku/widgets/text_widgets.dart';
 
@@ -8,6 +9,7 @@ const double iconSize = 45;
 
 class SudokuGameButtons {
   SudokuGamePgController sudokuGamePgController = Get.find();
+  SudokuController sudokuController = Get.find();
 
   Widget numberButton(int number) {
     return Expanded(
@@ -81,15 +83,15 @@ class SudokuGameButtons {
                 size: iconSize,
               )),
           Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                "9",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: MyColors.accent,
+              ),
+              child: Text(
+                sudokuController.numbersOfHint.toString(),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               )),
         ]),
         MyTextWidgets.sudokuGameButtonText(inputText: "Hint")
@@ -110,15 +112,15 @@ class SudokuGameButtons {
                   size: iconSize,
                 )),
             Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  "9",
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                ),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: MyColors.accent,
+                ),
+                child: Text(
+                  sudokuController.numbersOfSuperPencil.toString(),
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 )),
           ],
         ),

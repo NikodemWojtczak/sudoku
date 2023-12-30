@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
@@ -6,9 +7,11 @@ import 'package:sudoku/models/buttons_events/button_event_quick_pencil.dart';
 import 'package:sudoku/models/buttons_events/button_event_remove_hint_value.dart';
 import 'package:sudoku/models/buttons_events/button_event_set_field_value.dart';
 import 'package:sudoku/models/buttons_events/button_event_set_hint_value.dart';
+import 'package:sudoku/pages.dart';
 import 'package:sudoku/services/sudoku_progress_file_reader.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/utils/paths.dart';
+import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/pop_up.dart';
 
 class SudokuGamePgController extends GetxController {
@@ -29,6 +32,13 @@ class SudokuGamePgController extends GetxController {
   }
 
   void onCLickNumber(int number) {
+    if (!sudokuController.isGameOn) return;
+    if (sudokuController.sudokuBoard.isPredefined(highlightedField) ||
+        highlightedField > 80 ||
+        highlightedField < 0) {
+      return;
+    }
+
     if (isPencilOn) {
       if (sudokuController.sudokuBoard.hints[highlightedField]
               ?.contains(number) ??
@@ -46,26 +56,43 @@ class SudokuGamePgController extends GetxController {
   }
 
   void onCLickHint() {
+    if (!sudokuController.isGameOn) return;
     sudokuController.addAction(HintEvents());
     update();
   }
 
   void onCLickPencil() {
+    if (!sudokuController.isGameOn) return;
     isPencilOn = !isPencilOn;
     update();
   }
 
   void onCLickSuperPencil() {
+    if (!sudokuController.isGameOn) return;
     sudokuController.addAction(QuickPencilEvents());
     update();
   }
 
   void onCLickUndo() {
+    if (!sudokuController.isGameOn) return;
     sudokuController.undoAction();
     update();
   }
 
+  void onCLickRestart() {
+    sudokuController.sudokuBoard.resetSudokuBoard();
+    Get.back();
+    sudokuController.isGameOn = true;
+    update();
+  }
+
+  void onBackToChoosingLevel() {
+    Get.offNamedUntil(
+        Pages.pgChooseLevel, ModalRoute.withName(Pages.pgDashboard));
+  }
+
   void onCLickCheck() async {
+    sudokuController.isGameOn = false;
     if (sudokuController.sudokuBoard.validate()) {
       switch (pgChoosingLevelController.currentLevel.value) {
         case Levels.easy:
@@ -94,9 +121,22 @@ class SudokuGamePgController extends GetxController {
           break;
       }
       pgChoosingLevelController.update();
-      MyPopUp.basicPopUp("Success", MyStrings.gameWin);
+
+      MyPopUp.complexPopup("Success", MyStrings.gameWin, [
+        MyButtons.mainButtonWidget(
+            inputFunction: onBackToChoosingLevel, inputText: "New game"),
+        MyButtons.mainButtonWidget(
+            inputFunction: onCLickRestart, inputText: "Restart"),
+        MyButtons.mainButtonWidget(inputFunction: Get.back, inputText: "Back"),
+      ]);
     } else {
-      MyPopUp.basicPopUp("Failure", MyStrings.gameFail);
+      MyPopUp.complexPopup("Failure", MyStrings.gameFail, [
+        MyButtons.mainButtonWidget(
+            inputFunction: onBackToChoosingLevel, inputText: "New game"),
+        MyButtons.mainButtonWidget(
+            inputFunction: onCLickRestart, inputText: "Restart"),
+        MyButtons.mainButtonWidget(inputFunction: Get.back, inputText: "Back"),
+      ]);
     }
   }
 

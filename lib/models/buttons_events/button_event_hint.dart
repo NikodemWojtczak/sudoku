@@ -6,6 +6,7 @@ class HintEvents extends ButtonEvents {
   @override
   void execute() {
     SudokuBackTracking sudokuBackTracking = SudokuBackTracking();
+    sudokuController.decreaseNumbersOfHints();
     try {
       sudokuBackTracking.solveSudoku(sudokuController.sudokuBoard);
     } catch (e) {

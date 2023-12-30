@@ -1,6 +1,7 @@
 class SudokuBoard {
   List<int> _sudokuBoard = [];
-
+  List<int> _oryginalSudokuBoard = [];
+  List<int> _preFilledIndexes = [];
   Map<int, List<int>> hints = {};
 
   SudokuBoard() {
@@ -98,8 +99,24 @@ class SudokuBoard {
     }
   }
 
+  bool isPredefined(int index) {
+    return _preFilledIndexes.contains(index);
+  }
+
+  void resetSudokuBoard() {
+    _sudokuBoard = List.from(_oryginalSudokuBoard);
+    _resetHintValues();
+  }
+
   void loadSudokuBoard(List<int> sudokuBoardInput) {
-    _sudokuBoard = sudokuBoardInput;
+    _preFilledIndexes.clear();
+    for (var i = 0; i < sudokuBoardInput.length; i++) {
+      if (sudokuBoardInput[i] != 0) {
+        _preFilledIndexes.add(i);
+      }
+    }
+    _sudokuBoard = List.from(sudokuBoardInput);
+    _oryginalSudokuBoard = List.from(sudokuBoardInput);
     _resetHintValues();
   }
 

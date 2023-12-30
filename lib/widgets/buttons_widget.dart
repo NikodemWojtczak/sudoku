@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
+import 'package:sudoku/pages/pg_sudoku_game.dart';
 import 'package:sudoku/utils/my_colors.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/widgets/pop_up.dart';
@@ -38,6 +40,18 @@ class MyButtons {
         }
       },
       icon: const Icon(Icons.arrow_back_ios_new),
+      iconSize: 32,
+    );
+  }
+
+  static Widget restartButtonWidget() {
+    return IconButton(
+      onPressed: () {
+        SudokuGamePgController sudokuGamePgController = Get.find();
+        MyPopUp.yesNoPopUp("Warning", MyStrings.gameRestart,
+            sudokuGamePgController.onCLickRestart);
+      },
+      icon: const Icon(Icons.refresh_sharp),
       iconSize: 32,
     );
   }
