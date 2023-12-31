@@ -94,4 +94,11 @@ class SudokuController extends GetxController {
     }
     isGameOn = true;
   }
+
+  void loadSudokuBoard(List<int> board) {
+    _gameEvents.clear();
+    _level = 0;
+    sudokuBoard.loadSudokuBoard(board);
+    isGameOn = true;
+  }
 }

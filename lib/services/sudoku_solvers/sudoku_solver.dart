@@ -1,7 +1,7 @@
 import 'package:sudoku/models/sudoku_board_model.dart';
 
 abstract class SudokuSolver {
-  SudokuBoard generateSudoku();
+  List<int> generateSudoku();
 
   solveSudoku(SudokuBoard sudokuBoard);
 

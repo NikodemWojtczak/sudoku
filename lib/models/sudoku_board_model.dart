@@ -1,7 +1,9 @@
+import 'dart:math';
+
 class SudokuBoard {
   List<int> _sudokuBoard = [];
   List<int> _oryginalSudokuBoard = [];
-  List<int> _preFilledIndexes = [];
+  final List<int> _preFilledIndexes = [];
   Map<int, List<int>> hints = {};
 
   SudokuBoard() {
@@ -140,6 +142,20 @@ class SudokuBoard {
     hints = {};
     for (var i = 0; i < 81; i++) {
       hints[i] = [];
+    }
+  }
+
+  void eraseRandomFields(int number) {
+    hints = {};
+    for (var i = 0; i < number; i++) {
+      while (true) {
+        int randomIndex = Random().nextInt(81);
+        if (getFieldValue(randomIndex) == 0) {
+          continue;
+        }
+        setFieldValue(randomIndex, 0);
+        break;
+      }
     }
   }
 }

@@ -4,12 +4,11 @@ import 'package:sudoku/services/sudoku_solvers/sudoku_solver.dart';
 
 class SudokuBackTracking extends SudokuSolver {
   @override
-  SudokuBoard generateSudoku() {
+  List<int> generateSudoku() {
     SudokuBoard sudokuBoard = SudokuBoard();
     sudokuBoard.loadSudokuBoard(List.generate(81, (index) => 0));
-
     _backtracking(sudokuBoard: sudokuBoard);
-    return sudokuBoard;
+    return sudokuBoard.getBoard();
   }
 
   bool _backtracking({int index = 0, required SudokuBoard sudokuBoard}) {

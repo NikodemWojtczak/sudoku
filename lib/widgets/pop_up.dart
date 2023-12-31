@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sudoku/utils/my_colors.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
+import 'package:sudoku/widgets/text_widgets.dart';
 
 class MyPopUp {
   static void basicPopUp(String title, String content) {

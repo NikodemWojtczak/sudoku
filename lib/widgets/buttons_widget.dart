@@ -2,13 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
-import 'package:sudoku/pages/pg_sudoku_game.dart';
 import 'package:sudoku/utils/my_colors.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/widgets/pop_up.dart';
 import 'package:sudoku/widgets/text_widgets.dart';
 
 class MyButtons {
+  static Widget iconButtonWidget(
+      {required VoidCallback inputFunction, required IconData icon}) {
+    return GestureDetector(
+      onTap: inputFunction,
+      child: Container(
+        color: MyColors.primary,
+        child: Icon(
+          icon,
+          color: MyColors.background,
+          size: 45,
+        ),
+      ),
+    );
+  }
+
   static Widget mainButtonWidget(
       {required VoidCallback inputFunction, required String inputText}) {
     return OutlinedButton(
