@@ -9,6 +9,7 @@ import 'package:sudoku/models/buttons_events/button_event_remove_hint_value.dart
 import 'package:sudoku/models/buttons_events/button_event_set_field_value.dart';
 import 'package:sudoku/models/buttons_events/button_event_set_hint_value.dart';
 import 'package:sudoku/pages.dart';
+import 'package:sudoku/services/ad_controller.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/pop_up.dart';
@@ -64,12 +65,16 @@ class SudokuGamePgController extends GetxController {
 
   void onCLickHint() {
     if (!sudokuController.isGameOn) return;
+
     if (sudokuController.numbersOfHint > 0) {
       sudokuController.addAction(HintEvents());
     } else {
       MyPopUp.complexPopup("Warning", MyStrings.lackOfHints, [
         MyButtons.mainButtonWidget(
-            inputFunction: () {
+            inputFunction: () async {
+              AdController adController = AdController();
+              await adController.loadInterstitialAd();
+              await adController.interstitialAd?.show();
               sudokuController.increaseNumbersOfHints();
               Get.back();
               update();
@@ -92,7 +97,10 @@ class SudokuGamePgController extends GetxController {
     } else {
       MyPopUp.complexPopup("Warning", MyStrings.lackOfSuperPencil, [
         MyButtons.mainButtonWidget(
-            inputFunction: () {
+            inputFunction: () async {
+              AdController adController = AdController();
+              await adController.loadInterstitialAd();
+              await adController.interstitialAd?.show();
               sudokuController.increaseNumbersOfSuperPencils();
               Get.back();
               update();

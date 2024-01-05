@@ -23,13 +23,13 @@ class PgDashboard extends GetView<DashboardPageController> {
                     inputFunction: controller.onClickPlayButton,
                     inputText: "Play"),
               ),
-              SizedBox(height: 8),
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 32,
-                child: MyButtons.mainButtonWidget(
-                    inputFunction: controller.onClickAlgorythmsButton,
-                    inputText: "Algorythms"),
-              ),
+              // SizedBox(height: 8),
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width - 32,
+              //   child: MyButtons.mainButtonWidget(
+              //       inputFunction: controller.onClickAlgorythmsButton,
+              //       inputText: "Algorythms"),
+              // ),
             ]),
       ),
     );

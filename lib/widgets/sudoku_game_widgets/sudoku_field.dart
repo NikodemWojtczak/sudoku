@@ -21,6 +21,7 @@ class SudokuField {
     Color regularEdgeBorderColor = MyColors.fieldBorderBasic;
     Color highlightedColor = MyColors.highlightedColor;
     Color pickedColor = MyColors.pickedColor;
+    Color hintColor = MyColors.hintColor;
 
     BoxDecoration boxDecoration = BoxDecoration(
       color: sudokuGamePgController.yHighlighted == y &&
@@ -77,8 +78,8 @@ class SudokuField {
                           false
                       ? (index + 1).toString()
                       : "",
-                  style: const TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(color: hintColor, fontWeight: FontWeight.bold),
                 ),
               );
             },
@@ -86,5 +87,52 @@ class SudokuField {
             physics: const NeverScrollableScrollPhysics()),
       );
     }
+  }
+
+  Widget rawField({required int number, required int value}) {
+    int x = number % 9;
+    int y = number ~/ 9;
+
+    double borderWidth = MyConstantValues.borderWidth;
+    Color boxBorderColor = MyColors.fieldBorderBox;
+    Color regularEdgeBorderColor = MyColors.fieldBorderBasic;
+
+    BoxDecoration boxDecoration = BoxDecoration(
+      border: Border(
+        top: y == 0
+            ? BorderSide(width: borderWidth, color: boxBorderColor)
+            : BorderSide.none,
+        left: x == 0
+            ? BorderSide(width: borderWidth, color: boxBorderColor)
+            : BorderSide.none,
+        right: BorderSide(
+            width: borderWidth,
+            color: x % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
+        bottom: BorderSide(
+            width: borderWidth,
+            color: y % 3 == 2 ? boxBorderColor : regularEdgeBorderColor),
+      ),
+    );
+
+    if (value != 0) {
+      return Container(
+        decoration: boxDecoration,
+        child: FittedBox(
+          fit: BoxFit.fitHeight,
+          child: Text(
+            ((value).toString()),
+          ),
+        ),
+      );
+    }
+    return Container(
+      decoration: boxDecoration,
+      child: const FittedBox(
+        fit: BoxFit.fitHeight,
+        child: Text(
+          (""),
+        ),
+      ),
+    );
   }
 }

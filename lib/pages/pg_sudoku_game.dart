@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/app_controller.dart';
@@ -39,6 +37,7 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                   MyButtons.restartButtonWidget()
                 ],
               ),
+              const Spacer(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
@@ -70,7 +69,8 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
               Row(
                 children: List.generate(
                     9, (index) => SudokuGameButtons().numberButton(index + 1)),
-              )
+              ),
+              const Spacer(flex: 8),
             ],
           );
         }),

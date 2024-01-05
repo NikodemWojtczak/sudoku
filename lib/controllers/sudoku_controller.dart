@@ -66,7 +66,11 @@ class SudokuController extends GetxController {
   }
 
   void addAction(ButtonEvents buttonEvents) {
-    buttonEvents.execute();
+    try {
+      buttonEvents.execute();
+    } catch (e) {
+      return;
+    }
     _gameEvents.add(buttonEvents);
   }
 
@@ -101,7 +105,6 @@ class SudokuController extends GetxController {
     _gameEvents.clear();
     level = 0;
     sudokuBoard.loadSudokuBoard(board);
-
     isGameOn = true;
   }
 

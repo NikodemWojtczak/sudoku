@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/models/enums/Levels.dart';
@@ -9,6 +11,8 @@ class GenerateLevelController extends GetxController {
   RxInt currentBlankFields = 0.obs;
   RxBool isCustom = true.obs;
   SudokuController sudokuController = Get.find();
+  List<int> board = List.generate(81, (index) => 0);
+  bool isGenerated = false;
 
   onAddClick() {
     if (currentBlankFields.value == 81) return;
@@ -22,6 +26,12 @@ class GenerateLevelController extends GetxController {
 
   onCostomClick() {
     isCustom.value = true;
+  }
+
+  onGeneratePreviev() {
+    board = _generateBoardWithEraseNumber(currentBlankFields.value);
+    isGenerated = true;
+    update();
   }
 
   onLevelClick(Levels levels) {
@@ -39,10 +49,27 @@ class GenerateLevelController extends GetxController {
     isCustom.value = false;
   }
 
+  List<int> _generateBoardWithEraseNumber(int number) {
+    board = SudokuBackTracking().generateSudoku();
+    for (var i = 0; i < number; i++) {
+      while (true) {
+        int randomIndex = Random().nextInt(81);
+        if (board[randomIndex] == 0) {
+          continue;
+        }
+        board[randomIndex] = 0;
+        break;
+      }
+    }
+    return board;
+  }
+
   onPlayClick() {
-    List<int> board = SudokuBackTracking().generateSudoku();
+    if (!isGenerated) {
+      board = _generateBoardWithEraseNumber(currentBlankFields.value);
+      isGenerated = true;
+    }
     sudokuController.loadSudokuBoard(board);
-    sudokuController.sudokuBoard.eraseRandomFields(currentBlankFields.value);
     Get.toNamed(Pages.pgSudokuGame, parameters: {"custom": "true"});
   }
 }

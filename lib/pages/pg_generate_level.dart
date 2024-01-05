@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:sudoku/controllers/pages/pg_generate_level_controller.dart';
 import 'package:sudoku/models/enums/Levels.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
+import 'package:sudoku/widgets/sudoku_game_widgets/sudoku_field.dart';
+
 import 'package:sudoku/widgets/text_widgets.dart';
 
 class PgGenerateLevel extends GetView<GenerateLevelController> {
@@ -63,6 +65,30 @@ class PgGenerateLevel extends GetView<GenerateLevelController> {
                     Container(),
                   ],
                 )),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 16,
+              child: MyButtons.mainButtonWidget(
+                  inputFunction: () => controller.onGeneratePreviev(),
+                  inputText: "Generate a preview"),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GetBuilder<GenerateLevelController>(builder: (controler) {
+                return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 81,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 9),
+                    itemBuilder: (contex, index) {
+                      return SudokuField().rawField(
+                        value: controller.board[index],
+                        number: index,
+                      );
+                    });
+              }),
+            ),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),

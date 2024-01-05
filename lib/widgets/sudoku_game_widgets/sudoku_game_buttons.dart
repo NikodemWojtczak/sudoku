@@ -13,10 +13,11 @@ class SudokuGameButtons {
 
   Widget numberButton(int number) {
     return Expanded(
-        child: TextButton(
-            onPressed: () => sudokuGamePgController.onCLickNumber(number),
+        child: GestureDetector(
+            onTap: () => sudokuGamePgController.onCLickNumber(number),
             child: Text(
               number.toString(),
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 50,
                   color: sudokuGamePgController.isPencilOn
