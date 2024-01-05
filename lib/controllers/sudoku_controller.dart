@@ -2,22 +2,21 @@ import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
+import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/models/buttons_events/button_events.dart';
+import 'package:sudoku/models/enums/Levels.dart';
 import 'package:sudoku/models/sudoku_board_model.dart';
 
 class SudokuController extends GetxController {
-  late List<List<int>> sudokuBoardsHard;
-  late List<List<int>> sudokuBoardsEasy;
-  late List<List<int>> sudokuBoardsMedium;
   final List<ButtonEvents> _gameEvents = [];
   SudokuBoard sudokuBoard = SudokuBoard();
   int numbersOfHint = 2;
   int numbersOfSuperPencil = 2;
-  late int _level;
-  late Levels _difficulty;
+  late int level;
+  late Levels difficulty;
+  late bool isCustom = false;
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-
+  AppController appController = Get.find();
   bool isGameOn = false;
 
   @override
@@ -79,17 +78,20 @@ class SudokuController extends GetxController {
 
   void loadLevel(int level, Levels difficulty) {
     _gameEvents.clear();
-    _level = level;
-    _difficulty = difficulty;
-    switch (_difficulty) {
+    level = level;
+    difficulty = difficulty;
+    switch (difficulty) {
       case Levels.easy:
-        sudokuBoard.loadSudokuBoard(List.from(sudokuBoardsEasy[_level]));
+        sudokuBoard
+            .loadSudokuBoard(List.from(appController.sudokuBoardsEasy[level]));
         break;
       case Levels.medium:
-        sudokuBoard.loadSudokuBoard(List.from(sudokuBoardsMedium[_level]));
+        sudokuBoard.loadSudokuBoard(
+            List.from(appController.sudokuBoardsMedium[level]));
         break;
       case Levels.hard:
-        sudokuBoard.loadSudokuBoard(List.from(sudokuBoardsHard[_level]));
+        sudokuBoard
+            .loadSudokuBoard(List.from(appController.sudokuBoardsHard[level]));
         break;
     }
     isGameOn = true;
@@ -97,8 +99,11 @@ class SudokuController extends GetxController {
 
   void loadSudokuBoard(List<int> board) {
     _gameEvents.clear();
-    _level = 0;
+    level = 0;
     sudokuBoard.loadSudokuBoard(board);
+
     isGameOn = true;
   }
+
+  Future saveProgress() async {}
 }

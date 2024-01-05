@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:sudoku/models/sudoku_board_model.dart';
 import 'package:sudoku/services/sudoku_solvers/sudoku_solver.dart';
 

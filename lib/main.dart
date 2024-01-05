@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sudoku/controllers/pages/pg_algorythms_controller.dart';
+import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/pages/pg_dashboard_controller.dart';
 import 'package:sudoku/controllers/pages/pg_generate_level_controller.dart';
@@ -42,11 +42,11 @@ void main() async {
 }
 
 controllersInitialization() {
-  Get.lazyPut(() => DashboardPageController(), fenix: true);
-  Get.lazyPut(() => PgAlgorythmsController(), fenix: true);
-  Get.lazyPut(() => SudokuGamePgController(), fenix: true);
-  Get.lazyPut(() => PgChoosingLevelController(), fenix: true);
-  Get.lazyPut(() => GenerateLevelController(), fenix: true);
+  Get.put(AppController());
   Get.put(SudokuController());
   Get.put(ThemesController());
+  Get.put(DashboardPageController());
+  Get.put(PgChoosingLevelController());
+  Get.put(SudokuGamePgController());
+  Get.put(GenerateLevelController());
 }

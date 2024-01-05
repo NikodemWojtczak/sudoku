@@ -1,12 +1,11 @@
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:get/get.dart';
-import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
+import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/utils/paths.dart';
 
 class SudokuProgressFileReader {
-  PgChoosingLevelController pgChoosingLevelController = Get.find();
-
+  AppController appController = Get.find();
   Future<void> rewriteFile(String path, List progress) async {
     String csvData = const ListToCsvConverter().convert([progress]);
     final File file = File(path);
@@ -35,21 +34,21 @@ class SudokuProgressFileReader {
     String pathToHard = await MyPaths().pathToProgressHard;
 
     if (await File(pathToEasy).exists()) {
-      pgChoosingLevelController.progressEasy.value =
+      appController.progressEasy =
           (await _loadSudokuProgressFromFile(pathToEasy))[0];
     } else {
       await _writeNewFile(pathToEasy);
     }
 
     if (await File(pathToMedium).exists()) {
-      pgChoosingLevelController.progressMedium.value =
+      appController.progressMedium =
           (await _loadSudokuProgressFromFile(pathToMedium))[0];
     } else {
       await _writeNewFile(pathToMedium);
     }
 
     if (await File(pathToHard).exists()) {
-      pgChoosingLevelController.progressHard.value =
+      appController.progressHard =
           (await _loadSudokuProgressFromFile(pathToHard))[0];
     } else {
       await _writeNewFile(pathToHard);

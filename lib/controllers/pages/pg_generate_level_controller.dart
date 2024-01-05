@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
+import 'package:sudoku/models/enums/Levels.dart';
 import 'package:sudoku/pages.dart';
 import 'package:sudoku/services/sudoku_solvers/sudoku_backtracking.dart';
 import 'package:sudoku/utils/my_constant_values.dart';
@@ -43,6 +43,6 @@ class GenerateLevelController extends GetxController {
     List<int> board = SudokuBackTracking().generateSudoku();
     sudokuController.loadSudokuBoard(board);
     sudokuController.sudokuBoard.eraseRandomFields(currentBlankFields.value);
-    Get.toNamed(Pages.pgSudokuGame);
+    Get.toNamed(Pages.pgSudokuGame, parameters: {"custom": "true"});
   }
 }

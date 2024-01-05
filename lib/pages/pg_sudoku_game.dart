@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/controllers/pages/pg_sudoku_game_controller.dart';
 import 'package:sudoku/controllers/sudoku_controller.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
@@ -11,9 +14,15 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
   PgSudokuGame({super.key});
 
   SudokuController sudokuController = Get.find();
+  AppController appController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    controller.isCustom = false;
+    bool? isCustom = bool.tryParse(Get.parameters["custom"] ?? "");
+    if (isCustom != null) {
+      controller.isCustom = isCustom;
+    }
     return Scaffold(
       body: SafeArea(
         child: GetBuilder<SudokuGamePgController>(builder: (context) {
@@ -24,8 +33,9 @@ class PgSudokuGame extends GetView<SudokuGamePgController> {
                 children: [
                   MyButtons.backButtonWidget(),
                   MyTextWidgets.titleText(
-                      inputText:
-                          "Level ${controller.pgChoosingLevelController.level + 1}"),
+                      inputText: isCustom ?? false
+                          ? " "
+                          : "Level ${appController.level + 1}"),
                   MyButtons.restartButtonWidget()
                 ],
               ),

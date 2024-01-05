@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/pages/pg_generate_level_controller.dart';
+import 'package:sudoku/models/enums/Levels.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/text_widgets.dart';
 

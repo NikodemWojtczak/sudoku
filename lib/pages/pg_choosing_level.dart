@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
+import 'package:sudoku/models/enums/Levels.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/text_widgets.dart';
 
+// ignore: must_be_immutable
 class PgChosingLevel extends GetView<PgChoosingLevelController> {
-  const PgChosingLevel({super.key});
-
+  PgChosingLevel({super.key});
+  AppController appController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,13 +67,13 @@ class PgChosingLevel extends GetView<PgChoosingLevelController> {
                       bool isFinished;
                       switch (controller.currentLevel.value) {
                         case Levels.easy:
-                          isFinished = controller.progressEasy[index] == 1;
+                          isFinished = appController.progressEasy[index] == 1;
                           break;
                         case Levels.medium:
-                          isFinished = controller.progressMedium[index] == 1;
+                          isFinished = appController.progressMedium[index] == 1;
                           break;
                         case Levels.hard:
-                          isFinished = controller.progressHard[index] == 1;
+                          isFinished = appController.progressHard[index] == 1;
                           break;
                       }
                       return GestureDetector(
