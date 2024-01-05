@@ -9,7 +9,7 @@ import 'package:sudoku/models/buttons_events/button_event_remove_hint_value.dart
 import 'package:sudoku/models/buttons_events/button_event_set_field_value.dart';
 import 'package:sudoku/models/buttons_events/button_event_set_hint_value.dart';
 import 'package:sudoku/pages.dart';
-import 'package:sudoku/services/ad_controller.dart';
+import 'package:sudoku/controllers/AdDsiplay.dart';
 import 'package:sudoku/utils/my_strings.dart';
 import 'package:sudoku/widgets/buttons_widget.dart';
 import 'package:sudoku/widgets/pop_up.dart';
@@ -26,6 +26,7 @@ class SudokuGamePgController extends GetxController {
   int highlightedValue = 100;
   bool isPencilOn = false;
   bool isCustom = false;
+  AdDsiplay adDsiplay = Get.find();
 
   void onCLickField(int number) {
     highlightedField = number;
@@ -72,16 +73,19 @@ class SudokuGamePgController extends GetxController {
       MyPopUp.complexPopup("Warning", MyStrings.lackOfHints, [
         MyButtons.mainButtonWidget(
             inputFunction: () async {
-              AdController adController = AdController();
-              await adController.loadInterstitialAd();
-              await adController.interstitialAd?.show();
-              sudokuController.increaseNumbersOfHints();
-              Get.back();
+              if (adDsiplay.isAddDisplayng) {
+                return;
+              }
+              await adDsiplay.loadInterstitial(
+                  () => sudokuController.increaseNumbersOfHints());
               update();
             },
             inputText: "Watch an add"),
         MyButtons.mainButtonWidget(
             inputFunction: () {
+              if (adDsiplay.isAddDisplayng) {
+                return;
+              }
               Get.back();
             },
             inputText: "Back")
@@ -98,16 +102,19 @@ class SudokuGamePgController extends GetxController {
       MyPopUp.complexPopup("Warning", MyStrings.lackOfSuperPencil, [
         MyButtons.mainButtonWidget(
             inputFunction: () async {
-              AdController adController = AdController();
-              await adController.loadInterstitialAd();
-              await adController.interstitialAd?.show();
-              sudokuController.increaseNumbersOfSuperPencils();
-              Get.back();
+              if (adDsiplay.isAddDisplayng) {
+                return;
+              }
+              await adDsiplay.loadInterstitial(
+                  () => sudokuController.increaseNumbersOfSuperPencils());
               update();
             },
             inputText: "Watch an add"),
         MyButtons.mainButtonWidget(
             inputFunction: () {
+              if (adDsiplay.isAddDisplayng) {
+                return;
+              }
               Get.back();
             },
             inputText: "Back")

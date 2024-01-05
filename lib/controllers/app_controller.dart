@@ -7,7 +7,6 @@ class AppController extends GetxController {
   late List<List<int>> sudokuBoardsHard;
   late List<List<int>> sudokuBoardsEasy;
   late List<List<int>> sudokuBoardsMedium;
-
   late int level;
   Levels difficulty = Levels.easy;
 

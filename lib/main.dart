@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:sudoku/controllers/AdDsiplay.dart';
 import 'package:sudoku/controllers/app_controller.dart';
 import 'package:sudoku/controllers/pages/pg_choosing_level_controller.dart';
 import 'package:sudoku/controllers/pages/pg_dashboard_controller.dart';
@@ -15,6 +17,8 @@ import 'package:theme_provider/theme_provider.dart';
 
 void main() async {
   controllersInitialization();
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
 
   await SudokuBoardFileReader().loadSudokuBoards();
   await SudokuProgressFileReader().loadSudokuProgresses();
@@ -45,6 +49,7 @@ controllersInitialization() {
   Get.put(AppController());
   Get.put(SudokuController());
   Get.put(ThemesController());
+  Get.put(AdDsiplay());
   Get.put(DashboardPageController());
   Get.put(PgChoosingLevelController());
   Get.put(SudokuGamePgController());
